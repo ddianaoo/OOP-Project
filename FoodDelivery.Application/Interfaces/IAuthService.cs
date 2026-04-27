@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FoodDelivery.Domain.Entities;
 
-namespace FoodDelivery.Application.Interfaces
+namespace FoodDelivery.Application.Interfaces;
+
+public interface IAuthService
 {
-    internal class IAuthService
-    {
-    }
+    bool Login(string email, string password);
+    bool Register(User user);
 }

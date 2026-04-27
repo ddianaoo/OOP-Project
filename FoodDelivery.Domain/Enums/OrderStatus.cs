@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace FoodDelivery.Domain.Enums
 {
-    internal class OrderStatus
+    public enum OrderStatus
     {
+        Created,
+        Accepted,
+        InTransit,
+        Delivered,
+        Cancelled
     }
 }

@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FoodDelivery.Domain.Entities;
+using FoodDelivery.Domain.Enums;
 
-namespace FoodDelivery.Application.Interfaces
+namespace FoodDelivery.Application.Interfaces;
+
+public interface IOrderService
 {
-    internal class IOrderService
-    {
-    }
+    bool CreateOrder(Order order);
+    List<Order> GetOrders();
+    bool UpdateStatus(Order order, OrderStatus status);
 }

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FoodDelivery.Domain.Entities;
 
-namespace FoodDelivery.Application.Interfaces
+namespace FoodDelivery.Application.Interfaces;
+
+public interface IMenuService
 {
-    internal class IMenuService
-    {
-    }
+    List<Dish> GetMenu();
+    bool AddDish(Dish dish);
+    bool RemoveDish(Dish dish);
 }

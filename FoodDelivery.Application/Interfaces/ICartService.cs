@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using FoodDelivery.Domain.Entities;
 
-namespace FoodDelivery.Application.Interfaces
+namespace FoodDelivery.Application.Interfaces;
+
+public interface ICartService
 {
-    internal class ICartService
-    {
-    }
+    bool AddToCart(Dish dish, int quantity);
+    bool RemoveFromCart(Dish dish);
 }
