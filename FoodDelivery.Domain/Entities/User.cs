@@ -21,6 +21,9 @@ public class User
         if (string.IsNullOrWhiteSpace(password) || password.Length < 6)
             throw new ArgumentException("Invalid password");
 
+        if (birthDate < new DateTime(1900, 1, 1) || birthDate > DateTime.Today)
+            throw new ArgumentException("Invalid birth date");
+
         Email = email;
         Password = password;
         FirstName = firstName;

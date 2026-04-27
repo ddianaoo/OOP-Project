@@ -1,5 +1,6 @@
 ﻿using FoodDelivery.Application.Interfaces;
 using FoodDelivery.Domain.Entities;
+using System.Collections.Generic;
 
 namespace FoodDelivery.Infrastructure.Services;
 
@@ -9,7 +10,7 @@ public class MenuService : IMenuService
 
     public bool AddDish(Dish dish) => _menu.AddDish(dish);
 
-    public List<Dish> GetMenu() => _menu.GetMenu();
+    public IReadOnlyList<Dish> GetMenu() => _menu.GetMenu();
 
-    public bool RemoveDish(Dish dish) => _menu.RemoveDish(dish);
+    public bool RemoveDish(Dish dish) => _menu.RemoveDish(dish.Id);
 }
