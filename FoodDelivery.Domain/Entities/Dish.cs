@@ -1,6 +1,4 @@
-﻿namespace FoodDelivery.Domain.Entities;
-
-public class Dish
+﻿public class Dish
 {
     public Guid Id { get; private set; } = Guid.NewGuid();
 
@@ -9,19 +7,18 @@ public class Dish
     public decimal Price { get; private set; }
     public string? ImageUrl { get; private set; }
 
-    private Dish() { } // EF Core
+    private Dish() { } // EF
 
     public Dish(string name, string description, decimal price, string? imageUrl = null)
     {
-        if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException("Invalid name");
+        Name = name;
+        Description = description;
+        Price = price;
+        ImageUrl = imageUrl;
+    }
 
-        if (string.IsNullOrWhiteSpace(description))
-            throw new ArgumentException("Invalid description");
-
-        if (price <= 0)
-            throw new ArgumentException("Price must be > 0");
-
+    public void Update(string name, string description, decimal price, string? imageUrl)
+    {
         Name = name;
         Description = description;
         Price = price;

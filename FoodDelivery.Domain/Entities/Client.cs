@@ -4,27 +4,33 @@ namespace FoodDelivery.Domain.Entities;
 
 public class Client : User
 {
+
     public Cart Cart { get; private set; } = new();
+
+    private Client() { }
 
     public Client(string email, string password, string first, string last, DateTime birth, string phone)
         : base(email, password, first, last, birth, phone)
     {
     }
 
-    public bool AddToCart(Dish dish, int quantity)
+    public void AddToCart(Dish dish, int quantity)
     {
-        return Cart.AddItem(dish, quantity);
+        Cart.AddItem(dish, quantity);
     }
 
-    public (bool success, int orderId) CreateOrder(string address)
+    public Order CreateOrder(string address)
     {
         if (!Cart.Items.Any())
-            return (false, 0);
+            throw new Exception("Cart empty");
 
-        var order = new Order(address, Cart.Items.ToList());
+        var order = new Order(
+            address,
+            Cart.Items.Select(x => new OrderItem(x.Dish, x.Quantity)).ToList()
+        );
+
         Cart.Clear();
-
-        return (true, order.Id);
+        return order;
     }
 
     public OrderStatus TrackOrder(Order order)

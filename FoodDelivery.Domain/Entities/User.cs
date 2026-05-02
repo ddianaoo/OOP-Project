@@ -13,6 +13,7 @@ public class User
 
     public bool IsLoggedIn { get; private set; }
 
+    protected User() { }
     public User(string email, string password, string firstName, string lastName, DateTime birthDate, string phone)
     {
         if (string.IsNullOrWhiteSpace(email) || !email.Contains("@"))

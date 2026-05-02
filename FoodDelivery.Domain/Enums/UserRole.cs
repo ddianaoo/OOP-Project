@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FoodDelivery.Tests.Services
+namespace FoodDelivery.Domain.Enums
 {
-    internal class MenuServiceTests
+    public enum UserRole
     {
+        Client,
+        Courier
     }
 }

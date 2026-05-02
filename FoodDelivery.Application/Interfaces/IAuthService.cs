@@ -4,6 +4,6 @@ namespace FoodDelivery.Application.Interfaces;
 
 public interface IAuthService
 {
-    bool Login(string email, string password);
+    User? Login(string email, string password);
     bool Register(User user);
 }

@@ -1,23 +1,39 @@
 ﻿using FoodDelivery.Domain.Entities;
 using FoodDelivery.Domain.Enums;
-
-namespace FoodDelivery.Infrastructure.Services;
+using FoodDelivery.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 public class OrderService
 {
-    private readonly List<Order> _orders = new();
+    private readonly AppDbContext _context;
 
-    public Order CreateOrder(string address, List<(Dish dish, int quantity)> items)
+    public OrderService(AppDbContext context)
     {
-        var order = new Order(address, items);
-        _orders.Add(order);
+        _context = context;
+    }
+
+    public async Task<Order> CreateOrder(Order order)
+    {
+        _context.Orders.Add(order);
+        await _context.SaveChangesAsync();
         return order;
     }
 
-    public List<Order> GetOrders() => _orders;
-
-    public bool UpdateStatus(Order order, OrderStatus status)
+    public async Task<List<Order>> GetOrders()
     {
-        return order.ChangeStatus(status);
+        return await _context.Orders
+            .Include(o => o.Items)
+            .ThenInclude(i => i.Dish)
+            .ToListAsync();
+    }
+
+    public async Task<bool> UpdateStatus(int orderId, OrderStatus status)
+    {
+        var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == orderId);
+        if (order == null) return false;
+
+        order.ChangeStatus(status);
+        await _context.SaveChangesAsync();
+        return true;
     }
 }

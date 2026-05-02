@@ -1,0 +1,73 @@
+﻿@model FoodDelivery.Web.Models.RegisterViewModel
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-body">
+
+                <h3 class="text-center mb-4">Реєстрація</h3>
+
+<form asp-action="Register" method="post">
+
+    <div class="mb-3">
+        <input asp-for="FirstName" class="form-control" placeholder="Ім'я" />
+        <span asp-validation-for="FirstName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <input asp-for="LastName" class="form-control" placeholder="Прізвище" />
+        <span asp-validation-for="LastName" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <input asp-for="Email" class="form-control" placeholder="Пошта" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <input asp-for="Phone" class="form-control" placeholder="Номер телефону" />
+        <span asp-validation-for="Phone" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <input asp-for="Password" type="password" class="form-control" placeholder="Пароль" />
+        <span asp-validation-for="Password" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <input asp-for="Password2" type="password" class="form-control" placeholder="Повторити пароль" />
+        <span asp-validation-for="Password2" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <input asp-for="BirthDate" type="date" class="form-control" />
+        <span asp-validation-for="BirthDate" class="text-danger"></span>
+    </div>
+
+                    <div class="mb-3">
+                        <select asp-for="Role" class="form-control">
+                            <option value="Client">Клієнт</option>
+                            <option value="Courier">Кур'єр</option>
+                        </select>
+                    </div>
+
+    <button class="btn btn-pink w-100">Створити</button>
+
+</form>
+                <div asp-validation-summary="All" class="text-danger mb-3 list-unstyled"></div>
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="text-danger mt-3">
+                        @ViewBag.Error
+                    </div>
+                }
+
+                <p class="text-center mt-3">
+                    Вже маєте акаунт?
+                    <a href="/Auth/Login">Увійти</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

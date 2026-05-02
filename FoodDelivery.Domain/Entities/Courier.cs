@@ -6,6 +6,7 @@ public class Courier : User
 {
     public bool IsAvailable { get; private set; } = true;
 
+    private Courier() { }
     public Courier(string email, string password, string first, string last, DateTime birth, string phone)
         : base(email, password, first, last, birth, phone)
     {

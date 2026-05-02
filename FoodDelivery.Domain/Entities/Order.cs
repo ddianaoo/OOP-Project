@@ -11,9 +11,11 @@ public class Order
     public DateTime CreatedAt { get; private set; }
     public OrderStatus Status { get; private set; }
 
-    public List<(Dish dish, int quantity)> Items { get; private set; }
+    public List<OrderItem> Items { get; private set; } = new();
 
-    public Order(string address, List<(Dish dish, int quantity)> items)
+    private Order() { } // EF Core
+
+    public Order(string address, List<OrderItem> items)
     {
         if (string.IsNullOrWhiteSpace(address))
             throw new ArgumentException("Invalid address");

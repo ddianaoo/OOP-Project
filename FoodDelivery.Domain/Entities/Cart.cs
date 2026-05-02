@@ -1,37 +1,31 @@
-﻿namespace FoodDelivery.Domain.Entities;
+﻿using FoodDelivery.Domain.Entities;
 
 public class Cart
 {
-    private List<(Dish dish, int quantity)> _items = new();
-
-    public IReadOnlyList<(Dish dish, int quantity)> Items => _items;
+    public List<CartItem> Items { get; private set; } = new();
 
     public bool AddItem(Dish dish, int quantity)
     {
         if (quantity <= 0) return false;
 
-        var existing = _items.FirstOrDefault(i => i.dish.Id == dish.Id);
+        var existing = Items.FirstOrDefault(x => x.DishId == dish.Id);
 
-        if (existing.dish != null)
+        if (existing != null)
         {
-            _items.Remove(existing);
-            _items.Add((dish, existing.quantity + quantity));
+            existing.Increase(quantity);
             return true;
         }
 
-        _items.Add((dish, quantity));
+        Items.Add(new CartItem(dish, quantity));
         return true;
     }
 
-    public bool RemoveItem(Dish dish)
+    public void RemoveItem(Guid dishId)
     {
-        var item = _items.FirstOrDefault(i => i.dish.Id == dish.Id);
-
-        if (item.dish == null) return false;
-
-        _items.Remove(item);
-        return true;
+        var item = Items.FirstOrDefault(x => x.DishId == dishId);
+        if (item != null)
+            Items.Remove(item);
     }
 
-    public void Clear() => _items.Clear();
+    public void Clear() => Items.Clear();
 }
