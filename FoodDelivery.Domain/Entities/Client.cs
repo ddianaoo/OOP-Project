@@ -14,7 +14,7 @@ public class Client : User
 
     public void AddToCart(Dish dish, int quantity)
     {
-        Cart?.AddItem(dish, quantity);
+        Cart?.AddItem(dish.Id, quantity);
     }
 
     public Order CreateOrder(string address)

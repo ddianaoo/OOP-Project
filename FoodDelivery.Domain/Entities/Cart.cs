@@ -1,6 +1,4 @@
-﻿using FoodDelivery.Domain.Entities;
-
-public class Cart
+﻿public class Cart
 {
     public Guid Id { get; private set; } = Guid.NewGuid();
 
@@ -16,14 +14,21 @@ public class Cart
         ClientId = clientId;
     }
 
-    public void AddItem(Dish dish, int quantity)
+    public void AddItem(Guid dishId, int quantity)
     {
-        var existing = Items.FirstOrDefault(x => x.DishId == dish.Id);
+        var existing = Items.FirstOrDefault(x => x.DishId == dishId);
 
         if (existing != null)
             existing.Increase(quantity);
         else
-            Items.Add(new CartItem(Id, dish.Id, quantity));
+            Items.Add(new CartItem(Id, dishId, quantity));
+    }
+
+    public void RemoveItem(Guid dishId)
+    {
+        var item = Items.FirstOrDefault(x => x.DishId == dishId);
+        if (item != null)
+            Items.Remove(item);
     }
 
     public void Clear() => Items.Clear();

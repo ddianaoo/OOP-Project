@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using FoodDelivery.Application.Interfaces;
+using FoodDelivery.Domain.Interfaces;
 using FoodDelivery.Domain.Entities;
 using FoodDelivery.Web.Models;
 using System.Security.Claims;

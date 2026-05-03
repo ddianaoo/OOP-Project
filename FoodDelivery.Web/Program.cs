@@ -1,4 +1,4 @@
-using FoodDelivery.Application.Interfaces;
+using FoodDelivery.Domain.Interfaces;
 using FoodDelivery.Infrastructure.Data;
 using FoodDelivery.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
