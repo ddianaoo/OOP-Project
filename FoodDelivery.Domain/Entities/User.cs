@@ -1,6 +1,6 @@
 ﻿namespace FoodDelivery.Domain.Entities;
 
-public class User
+public abstract class User
 {
     public Guid Id { get; private set; } = Guid.NewGuid();
 

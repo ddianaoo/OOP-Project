@@ -1,72 +1,86 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
-  <Class Name="FoodDelivery.Domain.Entities.Admin">
-    <Position X="0.5" Y="0.5" Width="4" />
+  <Class Name="Admin">
+    <Position X="4.25" Y="1.25" Width="3" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAIAAAAIAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entities\Admin.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FoodDelivery.Domain.Entities.Cart">
-    <Position X="4" Y="6" Width="3.25" />
+  <Class Name="Cart">
+    <Position X="4.25" Y="8.5" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAACAAAAAAAAAAAgBAAAAAEAAAAAABAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAACAAAgAAAAAAAgAAAAAAEAAAAAABAAAQ=</HashCode>
       <FileName>Entities\Cart.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Client" />
+    </ShowAsAssociation>
   </Class>
-  <Class Name="FoodDelivery.Domain.Entities.Client">
-    <Position X="4.75" Y="3.75" Width="2.5" />
+  <Class Name="CartItem">
+    <Position X="8" Y="8.75" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAEAAAAAQAAAAAAAAAAAAAAAAAAAAAAQAAAAAACA=</HashCode>
-      <FileName>Entities\Client.cs</FileName>
+      <HashCode>AAACEEAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAgCAACAA=</HashCode>
+      <FileName>Entities\CartItem.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
+      <Property Name="Dish" />
       <Property Name="Cart" />
     </ShowAsAssociation>
   </Class>
-  <Class Name="FoodDelivery.Domain.Entities.Courier">
-    <Position X="0.5" Y="7.75" Width="3.25" />
+  <Class Name="Client">
+    <Position X="4.25" Y="3.5" Width="3.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAgAAAAIAAAAA=</HashCode>
+      <HashCode>AAEAAEAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>Entities\Client.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="FoodDelivery.Domain.Entities.Courier">
+    <Position X="12.5" Y="1.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAAAgAAAAAAAAAAAAAAAgAAAAIAAAAA=</HashCode>
       <FileName>Entities\Courier.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FoodDelivery.Domain.Entities.Dish">
-    <Position X="5.25" Y="0.5" Width="4.5" />
+  <Class Name="Dish">
+    <Position X="11.5" Y="8.75" Width="3.25" />
     <TypeIdentifier>
-      <HashCode>AAACQAAAAQAgAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAQCQAAAAQEgAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Entities\Dish.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="FoodDelivery.Domain.Entities.Menu">
-    <Position X="8" Y="3.5" Width="3.5" />
-    <TypeIdentifier>
-      <HashCode>AAABAIAAAAAAgAgAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Entities\Menu.cs</FileName>
-    </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Field Name="_dishes" />
-    </ShowAsCollectionAssociation>
-  </Class>
   <Class Name="FoodDelivery.Domain.Entities.Order">
-    <Position X="7.75" Y="6.25" Width="3.25" />
+    <Position X="8.25" Y="4" Width="4" />
     <TypeIdentifier>
-      <HashCode>AAACAAAEAAAACAAAACAAAAAAAAQAAAACAAAAAAAAEAA=</HashCode>
+      <HashCode>AAACAAAEAAAACAAAgCEAgAAAAAQAAAACAAgAAAAAAAQ=</HashCode>
       <FileName>Entities\Order.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Status" />
+      <Property Name="Client" />
+      <Property Name="Courier" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="FoodDelivery.Domain.Entities.OrderItem">
+    <Position X="13.25" Y="4.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>EAECAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAgCAAAAA=</HashCode>
+      <FileName>Entities\OrderItem.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Order" />
+      <Property Name="Dish" />
     </ShowAsAssociation>
   </Class>
   <Class Name="FoodDelivery.Domain.Entities.User">
-    <Position X="0.5" Y="4.25" Width="2.5" />
+    <Position X="8" Y="0.5" Width="3" />
     <TypeIdentifier>
-      <HashCode>AAACAEAAACAAAAAAAAAAAAYAAAAAAAACAAASIAAAAAg=</HashCode>
+      <HashCode>AAACAEAAACAAAAAAAAAAAAQAAAAAAAACAAAAIAAAAAg=</HashCode>
       <FileName>Entities\User.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Enum Name="FoodDelivery.Domain.Enums.OrderStatus">
-    <Position X="12.25" Y="6" Width="1.5" />
+    <Position X="6" Y="6.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAQAAAADAAAAAAAAAAAAAAAAIAAAQAAAAAAAAAAAA=</HashCode>
       <FileName>Enums\OrderStatus.cs</FileName>
