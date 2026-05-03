@@ -16,6 +16,9 @@ public class OrderItem
 
     public OrderItem(Dish dish, int quantity)
     {
+        if (quantity <= 0)
+            throw new ArgumentException("Invalid quantity");
+
         Dish = dish;
         DishId = dish.Id;
         Quantity = quantity;

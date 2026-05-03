@@ -11,8 +11,6 @@ public class User
     public DateTime BirthDate { get; private set; }
     public string Phone { get; private set; }
 
-    public bool IsLoggedIn { get; private set; }
-
     protected User() { }
     public User(string email, string password, string firstName, string lastName, DateTime birthDate, string phone)
     {
@@ -32,16 +30,4 @@ public class User
         BirthDate = birthDate;
         Phone = phone;
     }
-
-    public bool Login(string email, string password)
-    {
-        if (Email == email && Password == password)
-        {
-            IsLoggedIn = true;
-            return true;
-        }
-        return false;
-    }
-
-    public void Logout() => IsLoggedIn = false;
 }

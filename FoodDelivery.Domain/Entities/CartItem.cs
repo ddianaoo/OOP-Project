@@ -1,7 +1,10 @@
-﻿using FoodDelivery.Domain.Entities;
-
-public class CartItem
+﻿public class CartItem
 {
+    public int Id { get; private set; }
+
+    public Guid CartId { get; private set; }
+    public Cart Cart { get; private set; }
+
     public Guid DishId { get; private set; }
     public Dish Dish { get; private set; }
 
@@ -9,10 +12,10 @@ public class CartItem
 
     private CartItem() { }
 
-    public CartItem(Dish dish, int quantity)
+    public CartItem(Guid cartId, Guid dishId, int quantity)
     {
-        Dish = dish;
-        DishId = dish.Id;
+        CartId = cartId;
+        DishId = dishId;
         Quantity = quantity;
     }
 

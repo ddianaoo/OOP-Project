@@ -1,4 +1,6 @@
-﻿public class Dish
+﻿using FoodDelivery.Domain.Entities;
+
+public class Dish
 {
     public Guid Id { get; private set; } = Guid.NewGuid();
 
@@ -6,6 +8,7 @@
     public string Description { get; private set; }
     public decimal Price { get; private set; }
     public string? ImageUrl { get; private set; }
+    public List<OrderItem> OrderItems { get; private set; } = new();
 
     private Dish() { } // EF
 

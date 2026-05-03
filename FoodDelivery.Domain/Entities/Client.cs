@@ -1,11 +1,9 @@
-﻿using FoodDelivery.Domain.Enums;
-
-namespace FoodDelivery.Domain.Entities;
+﻿using FoodDelivery.Domain.Entities;
 
 public class Client : User
 {
-
-    public Cart Cart { get; private set; } = new();
+    public Cart Cart { get; private set; }
+    public List<Order> Orders { get; private set; } = new();
 
     private Client() { }
 
@@ -16,25 +14,21 @@ public class Client : User
 
     public void AddToCart(Dish dish, int quantity)
     {
-        Cart.AddItem(dish, quantity);
+        Cart?.AddItem(dish, quantity);
     }
 
     public Order CreateOrder(string address)
     {
-        if (!Cart.Items.Any())
+        if (Cart == null || !Cart.Items.Any())
             throw new Exception("Cart empty");
 
         var order = new Order(
+            this.Id,
             address,
             Cart.Items.Select(x => new OrderItem(x.Dish, x.Quantity)).ToList()
         );
 
         Cart.Clear();
         return order;
-    }
-
-    public OrderStatus TrackOrder(Order order)
-    {
-        return order.Status;
     }
 }

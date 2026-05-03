@@ -5,6 +5,7 @@ namespace FoodDelivery.Domain.Entities;
 public class Courier : User
 {
     public bool IsAvailable { get; private set; } = true;
+    public List<Order> Orders { get; private set; } = new();
 
     private Courier() { }
     public Courier(string email, string password, string first, string last, DateTime birth, string phone)
@@ -17,7 +18,9 @@ public class Courier : User
         if (order.Status != OrderStatus.Created)
             return false;
 
+        order.AssignCourier(this.Id);
         order.ChangeStatus(OrderStatus.Accepted);
+
         IsAvailable = false;
         return true;
     }
