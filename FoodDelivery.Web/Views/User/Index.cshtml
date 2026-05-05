@@ -1,0 +1,101 @@
+﻿@model UserListViewModel
+
+<div class="container">
+
+    <h2 class="fw-bold mb-4">👥 Користувачі</h2>
+
+    <div class="card shadow rounded-4">
+        <div class="card-body">
+
+            <!-- Tabs -->
+            <ul class="nav nav-tabs mb-3" id="userTabs">
+                <li class="nav-item">
+                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#clients">
+                        🧑‍ Клієнти
+                    </button>
+                </li>
+                <li class="nav-item">
+                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#couriers">
+                        🚴 Кур'єри
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+
+                <!-- CLIENTS -->
+                <div class="tab-pane fade show active" id="clients">
+
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Ім'я</th>
+                                <th>Прізвище</th>
+                                <th>Пошта</th>
+                                <th>Номер телефону</th>
+                                <th>Дата народження</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var user in Model.Clients)
+                            {
+                                <tr>
+                                    <td>@user.FirstName</td>
+                                    <td>@user.LastName</td>
+                                    <td>@user.Email</td>
+                                    <td>@user.Phone</td>
+                                    <td>@user.BirthDate.ToShortDateString()</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <!-- COURIERS -->
+                <div class="tab-pane fade" id="couriers">
+
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Ім'я</th>
+                                <th>Прізвище</th>
+                                <th>Пошта</th>
+                                <th>Номер телефону</th>
+                                <th>Дата народження</th>
+                                <th>Статус</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var user in Model.Couriers)
+                            {
+                                <tr>
+                                    <td>@user.FirstName</td>
+                                    <td>@user.LastName</td>
+                                    <td>@user.Email</td>
+                                    <td>@user.Phone</td>
+                                    <td>@user.BirthDate.ToShortDateString()</td>
+                                    <td>
+                                        @if (user.IsAvailable)
+                                        {
+                                            <span class="badge bg-success">Вільний</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">Зайнятий</span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
