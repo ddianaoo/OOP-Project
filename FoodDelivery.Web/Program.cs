@@ -31,6 +31,11 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("ClientOnly", policy =>
         policy.RequireClaim("UserType", "Client"));
 });
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("CourierOnly", policy =>
+        policy.RequireClaim("UserType", "Courier"));
+});
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

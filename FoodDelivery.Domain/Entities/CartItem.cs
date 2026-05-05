@@ -1,6 +1,6 @@
 ﻿public class CartItem
 {
-    public int Id { get; private set; }
+    public Guid Id { get; private set; }
 
     public Guid CartId { get; private set; }
     public Cart Cart { get; private set; }

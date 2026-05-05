@@ -1,0 +1,175 @@
+﻿@using FoodDelivery.Domain.Entities
+@using FoodDelivery.Domain.Enums
+@using System.Security.Claims
+@model CourierOrdersViewModel
+
+@{
+    var userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+}
+
+<h2 class="mb-4">
+    <i class="bi bi-bicycle"></i> Кур’єрські замовлення
+</h2>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+<div class="card shadow-sm rounded-3">
+    <div class="card-body">
+
+        <!-- TABS -->
+        <ul class="nav nav-tabs mb-3">
+            <li class="nav-item">
+                <button class="nav-link active"
+                        data-bs-toggle="tab"
+                        data-bs-target="#new">
+                    Нові замовлення
+                </button>
+            </li>
+
+            <li class="nav-item">
+                <button class="nav-link"
+                        data-bs-toggle="tab"
+                        data-bs-target="#mine">
+                    Мої замовлення
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+
+            <!-- NEW ORDERS -->
+            <div class="tab-pane fade show active" id="new">
+
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Адреса</th>
+                            <th>Клієнт</th>
+                            <th>Статус</th>
+                            <th>Створено</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in Model.AvailableOrders)
+                        {
+                            <tr>
+                                <td>@order.Address</td>
+
+                                <td>
+                                    @order.Client?.FirstName @order.Client?.LastName
+                                    <br />
+                                    <small class="text-muted">@order.Client?.Phone</small>
+                                </td>
+
+                                <td>
+                                    <span class="badge bg-secondary">
+                                        @order.Status
+                                    </span>
+                                </td>
+
+                                <td>
+                                    @order.CreatedAt.ToLocalTime()
+                                </td>
+
+                                <td>
+                                    @if (order.CanBeAccepted())
+                                    {
+                                        <form asp-controller="CourierOrder"
+                                              asp-action="Accept"
+                                              method="post">
+                                            <input type="hidden" name="orderId" value="@order.Id" />
+                                            <button type="submit" class="btn btn-success btn-sm">
+                                                Прийняти
+                                            </button>
+                                        </form>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+            <!-- MY ORDERS -->
+            <div class="tab-pane fade" id="mine">
+
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Адреса</th>
+                            <th>Клієнт</th>
+                            <th>Статус</th>
+                            <th>Створено</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var order in Model.MyOrders)
+                        {
+                            <tr>
+                                <td>@order.Address</td>
+
+                                <td>
+                                    @order.Client?.FirstName @order.Client?.LastName
+                                    <br />
+                                    <small class="text-muted">@order.Client?.Phone</small>
+                                </td>
+
+                                <td>
+                                    <span class="badge
+                                        @(order.Status == OrderStatus.Accepted ? "bg-primary" :
+                                          order.Status == OrderStatus.InProgress ? "bg-warning text-dark" :
+                                          "bg-success")">
+                                        @order.Status
+                                    </span>
+                                </td>
+
+                                <td>
+                                    @order.CreatedAt.ToLocalTime()
+                                </td>
+
+                                <td>
+
+                                    @if (order.CourierId == userId && order.Status == OrderStatus.Accepted)
+                                    {
+                                        <form asp-controller="CourierOrder"
+                                              asp-action="InProgress"
+                                              method="post">
+                                            <input type="hidden" name="orderId" value="@order.Id" />
+                                            <button type="submit" class="btn btn-warning btn-sm">
+                                                В дорозі
+                                            </button>
+                                        </form>
+                                    }
+
+                                    @if (order.CourierId == userId && order.Status == OrderStatus.InProgress)
+                                    {
+                                        <form asp-controller="CourierOrder"
+                                              asp-action="Delivered"
+                                              method="post">
+                                            <input type="hidden" name="orderId" value="@order.Id" />
+                                            <button type="submit" class="btn btn-primary btn-sm">
+                                                Доставлено
+                                            </button>
+                                        </form>
+                                    }
+
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>

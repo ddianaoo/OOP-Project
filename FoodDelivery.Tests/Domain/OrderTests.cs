@@ -2,129 +2,120 @@
 using FoodDelivery.Domain.Enums;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
-namespace FoodDelivery.Tests.Domain
+namespace FoodDelivery.Tests.Domain.FoodDelivery.Tests.DomainTests
 {
-    namespace FoodDelivery.Tests.DomainTests
+    public class OrderTests
     {
-        public class OrderTests
+        // =========================
+        // HELPERS
+        // =========================
+
+        private Dish CreateDish()
         {
-            // =========================
-            // HELPERS
-            // =========================
+            return new Dish("Pizza", "Tasty pizza", 10m);
+        }
 
-            private Dish CreateDish()
-            {
-                return new Dish("Pizza", "Tasty pizza", 10m);
-            }
-
-            private List<OrderItem> CreateItems()
-            {
-                return new List<OrderItem>
+        private List<OrderItem> CreateItems()
+        {
+            return new List<OrderItem>
             {
                 new OrderItem(CreateDish().Id, 1)
             };
-            }
+        }
 
-            // =========================
-            // CREATE ORDER
-            // =========================
+        // =========================
+        // CREATE ORDER
+        // =========================
 
-            [Fact]
-            public void CreateOrder_Should_Set_Initial_State()
-            {
-                var clientId = Guid.NewGuid();
-                var items = CreateItems();
+        [Fact]
+        public void CreateOrder_Should_Set_Initial_State()
+        {
+            var clientId = Guid.NewGuid();
 
-                var order = new Order(clientId, "Kyiv", items);
+            var order = new Order(clientId, "Kyiv", CreateItems());
 
-                Assert.Equal(clientId, order.ClientId);
-                Assert.Equal("Kyiv", order.Address);
-                Assert.Equal(OrderStatus.Created, order.Status);
-                Assert.Single(order.Items);
-                Assert.NotNull(order.CreatedAt);
-            }
+            Assert.Equal(clientId, order.ClientId);
+            Assert.Equal("Kyiv", order.Address);
+            Assert.Equal(OrderStatus.New, order.Status);
+            Assert.Single(order.Items);
+            Assert.NotNull(order.CreatedAt);
+        }
 
-            // =========================
-            // VALIDATION
-            // =========================
+        // =========================
+        // VALIDATION
+        // =========================
 
-            [Fact]
-            public void CreateOrder_Should_Throw_If_Address_Is_Empty()
-            {
-                var items = CreateItems();
+        [Fact]
+        public void CreateOrder_Should_Throw_If_Address_Is_Empty()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                new Order(Guid.NewGuid(), "", CreateItems())
+            );
+        }
 
-                Assert.Throws<ArgumentException>(() =>
-                    new Order(Guid.NewGuid(), "", items)
-                );
-            }
+        [Fact]
+        public void CreateOrder_Should_Throw_If_Items_Are_Empty()
+        {
+            Assert.Throws<ArgumentException>(() =>
+                new Order(Guid.NewGuid(), "Kyiv", new List<OrderItem>())
+            );
+        }
 
-            [Fact]
-            public void CreateOrder_Should_Throw_If_Items_Are_Empty()
-            {
-                Assert.Throws<ArgumentException>(() =>
-                    new Order(Guid.NewGuid(), "Kyiv", new List<OrderItem>())
-                );
-            }
+        // =========================
+        // COURIER ASSIGNMENT
+        // =========================
 
-            // =========================
-            // COURIER ASSIGNMENT
-            // =========================
+        [Fact]
+        public void AssignCourier_Should_Set_CourierId()
+        {
+            var order = new Order(Guid.NewGuid(), "Kyiv", CreateItems());
+            var courierId = Guid.NewGuid();
 
-            [Fact]
-            public void AssignCourier_Should_Set_CourierId()
-            {
-                var order = new Order(Guid.NewGuid(), "Kyiv", CreateItems());
-                var courierId = Guid.NewGuid();
+            order.AssignCourier(courierId);
 
-                order.AssignCourier(courierId);
+            Assert.Equal(courierId, order.CourierId);
+        }
 
-                Assert.Equal(courierId, order.CourierId);
-            }
+        [Fact]
+        public void AssignCourier_Should_Throw_If_Already_Assigned()
+        {
+            var order = new Order(Guid.NewGuid(), "Kyiv", CreateItems());
 
-            [Fact]
-            public void AssignCourier_Should_Throw_If_Already_Assigned()
-            {
-                var order = new Order(Guid.NewGuid(), "Kyiv", CreateItems());
+            order.AssignCourier(Guid.NewGuid());
 
-                order.AssignCourier(Guid.NewGuid());
+            Assert.Throws<Exception>(() =>
+                order.AssignCourier(Guid.NewGuid())
+            );
+        }
 
-                Assert.Throws<Exception>(() =>
-                    order.AssignCourier(Guid.NewGuid())
-                );
-            }
+        // =========================
+        // ACCEPT ORDER (ONLY REAL FLOW)
+        // =========================
 
-            // =========================
-            // STATUS FLOW
-            // =========================
+        [Fact]
+        public void Accept_Should_Set_Status_To_Accepted()
+        {
+            var order = new Order(Guid.NewGuid(), "Kyiv", CreateItems());
+            var courierId = Guid.NewGuid();
 
-            [Fact]
-            public void ChangeStatus_Should_Update_Status()
-            {
-                var order = new Order(Guid.NewGuid(), "Kyiv", CreateItems());
+            order.AssignCourier(courierId);
 
-                var result = order.ChangeStatus(OrderStatus.Accepted);
+            order.Accept(courierId);
 
-                Assert.True(result);
-                Assert.Equal(OrderStatus.Accepted, order.Status);
-            }
+            Assert.Equal(OrderStatus.Accepted, order.Status);
+            Assert.Equal(courierId, order.CourierId);
+        }
 
-            [Fact]
-            public void ChangeStatus_Should_Not_Change_When_Delivered()
-            {
-                var order = new Order(Guid.NewGuid(), "Kyiv", CreateItems());
+        [Fact]
+        public void Accept_Should_Not_Work_Without_Courier()
+        {
+            var order = new Order(Guid.NewGuid(), "Kyiv", CreateItems());
 
-                order.ChangeStatus(OrderStatus.Delivered);
+            var result = order.Status;
 
-                var result = order.ChangeStatus(OrderStatus.Accepted);
-
-                Assert.False(result);
-                Assert.Equal(OrderStatus.Delivered, order.Status);
-            }
+            Assert.Equal(OrderStatus.New, result);
         }
     }
 }

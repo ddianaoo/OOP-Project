@@ -8,10 +8,10 @@ namespace FoodDelivery.Domain.Enums
 {
     public enum OrderStatus
     {
-        Created,
-        Accepted,
-        InTransit,
-        Delivered,
-        Cancelled
+        New = 0,
+        Accepted = 1,
+        InProgress = 2,
+        Delivered = 3,
+        Cancelled = 4
     }
 }

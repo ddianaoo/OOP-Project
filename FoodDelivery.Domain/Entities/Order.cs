@@ -3,16 +3,16 @@
 namespace FoodDelivery.Domain.Entities;
 public class Order
 {
-    public int Id { get; private set; }
+    public Guid Id { get; private set; }
 
     public string Address { get; private set; }
     public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
-    public OrderStatus Status { get; private set; }
+    public OrderStatus Status { get; set; }
 
     public Guid ClientId { get; private set; }
     public Client Client { get; private set; }
 
-    public Guid? CourierId { get; private set; }
+    public Guid? CourierId { get; set; }
     public Courier? Courier { get; private set; }
 
     public List<OrderItem> Items { get; private set; } = new();
@@ -31,7 +31,7 @@ public class Order
         Address = address;
         Items = items;
         CreatedAt = DateTime.UtcNow;
-        Status = OrderStatus.Created;
+        Status = OrderStatus.New;
     }
 
     public void AssignCourier(Guid courierId)
@@ -42,12 +42,32 @@ public class Order
         CourierId = courierId;
     }
 
-    public bool ChangeStatus(OrderStatus status)
+    public void Accept(Guid courierId)
     {
-        if (Status == OrderStatus.Delivered)
-            return false;
+        if (Status != OrderStatus.New)
+            throw new Exception("Order already taken");
 
-        Status = status;
-        return true;
+        CourierId = courierId;
+        Status = OrderStatus.Accepted;
+    }
+
+    public void SetInProgress()
+    {
+        if (Status != OrderStatus.Accepted)
+            throw new Exception("Not allowed");
+
+        Status = OrderStatus.InProgress;
+    }
+
+    public void Deliver()
+    {
+        if (Status != OrderStatus.InProgress)
+            throw new Exception("Not allowed");
+
+        Status = OrderStatus.Delivered;
+    }
+    public bool CanBeAccepted()
+    {
+        return Status == OrderStatus.New && CourierId == null;
     }
 }

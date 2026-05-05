@@ -4,6 +4,9 @@ using FoodDelivery.Infrastructure.Data;
 using FoodDelivery.Infrastructure.Services;
 using FoodDelivery.Domain.Entities;
 using FoodDelivery.Domain.Enums;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FoodDelivery.Tests.Services;
 
@@ -18,6 +21,10 @@ public class OrderServiceTests
 
         return new AppDbContext(options);
     }
+
+    // =========================
+    // CREATE
+    // =========================
 
     [Fact]
     public async Task CreateAsync_Should_Add_Order()
@@ -44,6 +51,10 @@ public class OrderServiceTests
         Assert.Single(await context.Orders.ToListAsync());
         Assert.Single(await context.OrderItems.ToListAsync());
     }
+
+    // =========================
+    // GET ALL
+    // =========================
 
     [Fact]
     public async Task GetAllAsync_Should_Return_Orders_With_Items_And_Dish()
@@ -72,7 +83,7 @@ public class OrderServiceTests
             "Kyiv street 2",
             new List<OrderItem>
             {
-            new OrderItem(dish.Id, 1)
+                new OrderItem(dish.Id, 1)
             }
         );
 
@@ -80,10 +91,8 @@ public class OrderServiceTests
 
         context.ChangeTracker.Clear();
 
-        // Act
         var result = await service.GetAllAsync();
 
-        // Assert
         Assert.NotNull(result);
         Assert.Single(result);
         Assert.Single(result[0].Items);
@@ -92,13 +101,13 @@ public class OrderServiceTests
     }
 
     [Fact]
-    public async Task ChangeStatusAsync_Should_Update_Status()
+    public async Task Courier_Should_Be_Able_To_Accept_Order()
     {
         var context = CreateContext();
         var service = new OrderService(context);
 
         var dish = new Dish("Sushi", "Fresh sushi", 25);
-        await context.Dishes.AddAsync(dish);
+        context.Dishes.Add(dish);
         await context.SaveChangesAsync();
 
         var order = new Order(
@@ -110,25 +119,20 @@ public class OrderServiceTests
             }
         );
 
-        await context.Orders.AddAsync(order);
+        context.Orders.Add(order);
         await context.SaveChangesAsync();
 
-        var result = await service.ChangeStatusAsync(order.Id, OrderStatus.Accepted);
+        var courierId = Guid.NewGuid();
 
-        Assert.True(result);
+        order.AssignCourier(courierId);
+        order.Accept(courierId);
+
+        context.Update(order);
+        await context.SaveChangesAsync();
 
         var updated = await context.Orders.FirstAsync();
+
         Assert.Equal(OrderStatus.Accepted, updated.Status);
-    }
-
-    [Fact]
-    public async Task ChangeStatusAsync_Should_Return_False_If_Order_Not_Found()
-    {
-        var context = CreateContext();
-        var service = new OrderService(context);
-
-        var result = await service.ChangeStatusAsync(999, OrderStatus.Accepted);
-
-        Assert.False(result);
+        Assert.Equal(courierId, updated.CourierId);
     }
 }

@@ -7,6 +7,11 @@ public interface IOrderService
 {
     Task<Order> CreateAsync(Order order);
     Task<List<Order>> GetAllAsync();
-    Task<bool> ChangeStatusAsync(int orderId, OrderStatus status);
+    Task<List<Order>> GetMyActiveOrders(Guid courierId);
+    Task<List<Order>> GetAvailableOrders();
     Task<List<Order>> GetByClientIdAsync(Guid clientId);
+
+    Task<bool> Accept(Guid orderId, Guid courierId);
+    Task<bool> SetInProgress(Guid orderId, Guid courierId);
+    Task<bool> Deliver(Guid orderId, Guid courierId);
 }

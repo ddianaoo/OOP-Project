@@ -31,24 +31,38 @@ public class CourierTests
     [Fact]
     public void AcceptOrder_Should_Set_Status_And_Disable_Availability()
     {
+        // arrange
         var courier = CreateCourier();
         var order = CreateOrder();
 
+        // act
         var result = courier.AcceptOrder(order);
 
+        // assert
         Assert.True(result);
         Assert.Equal(OrderStatus.Accepted, order.Status);
         Assert.False(courier.IsAvailable);
+        Assert.Equal(courier.Id, order.CourierId);
     }
 
     [Fact]
-    public void UpdateOrderStatus_Should_Update_Status()
+    public void AcceptOrder_Should_Fail_When_Order_Not_New()
     {
         var courier = CreateCourier();
         var order = CreateOrder();
 
-        courier.UpdateOrderStatus(order, OrderStatus.Delivered);
+        order.Accept(Guid.NewGuid());
 
-        Assert.Equal(OrderStatus.Delivered, order.Status);
+        var result = courier.AcceptOrder(order);
+
+        Assert.False(result);
+    }
+
+    [Fact]
+    public void Courier_Should_Be_Available_Initially()
+    {
+        var courier = CreateCourier();
+
+        Assert.True(courier.IsAvailable);
     }
 }
