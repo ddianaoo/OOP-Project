@@ -52,7 +52,8 @@
                             <th>Клієнт</th>
                             <th>Статус</th>
                             <th>Створено</th>
-                            <th></th>
+                            <th>Дії</th>
+                            <th>Деталі</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -90,6 +91,28 @@
                                         </form>
                                     }
                                 </td>
+                                <td>
+                                    <details>
+                                        <summary class="btn btn-sm btn-outline-secondary">
+                                            📦 Склад
+                                        </summary>
+
+                                        <ul class="mt-2">
+                                            @foreach (var item in order.Items)
+                                            {
+                                                <li>
+                                                    @item.Dish?.Name —
+                                                    @item.Quantity × @item.Dish?.Price ₴
+                                                </li>
+                                            }
+                                        </ul>
+
+                                        <strong>
+                                            Разом:
+                                            @order.Items.Sum(x => x.Quantity * x.Dish.Price) ₴
+                                        </strong>
+                                    </details>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -107,7 +130,8 @@
                             <th>Клієнт</th>
                             <th>Статус</th>
                             <th>Створено</th>
-                            <th></th>
+                            <th>Дії</th>
+                            <th>Деталі</th>
                         </tr>
                     </thead>
 
@@ -162,6 +186,28 @@
                                         </form>
                                     }
 
+                                </td>
+                                <td>
+                                    <details>
+                                        <summary class="btn btn-sm btn-outline-secondary">
+                                            📦 Склад
+                                        </summary>
+
+                                        <ul class="mt-2">
+                                            @foreach (var item in order.Items)
+                                            {
+                                                <li>
+                                                    @item.Dish?.Name —
+                                                    @item.Quantity × @item.Dish?.Price ₴
+                                                </li>
+                                            }
+                                        </ul>
+
+                                        <strong>
+                                            Разом:
+                                            @order.Items.Sum(x => x.Quantity * x.Dish.Price) ₴
+                                        </strong>
+                                    </details>
                                 </td>
                             </tr>
                         }

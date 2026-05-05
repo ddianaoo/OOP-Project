@@ -14,4 +14,5 @@ public interface IOrderService
     Task<bool> Accept(Guid orderId, Guid courierId);
     Task<bool> SetInProgress(Guid orderId, Guid courierId);
     Task<bool> Deliver(Guid orderId, Guid courierId);
+    Task<bool> Cancel(Guid orderId, Guid clientId);
 }

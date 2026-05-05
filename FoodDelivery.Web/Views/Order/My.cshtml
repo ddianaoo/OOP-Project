@@ -25,6 +25,7 @@ else
                     <span class="badge
                         @(order.Status == OrderStatus.New ? "bg-secondary" :
                           order.Status == OrderStatus.Accepted ? "bg-primary" :
+                          order.Status == OrderStatus.Cancelled ? "bg-danger" :
                           order.Status == OrderStatus.InProgress ? "bg-warning text-dark" :
                           "bg-success")">
                         @order.Status
@@ -73,6 +74,16 @@ else
                     </tbody>
                 </table>
 
+
+                @if (order.Status == OrderStatus.New)
+                {
+                    <form asp-action="Cancel" method="post" class="mt-2">
+                        <input type="hidden" name="orderId" value="@order.Id" />
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            Скасувати
+                        </button>
+                    </form>
+                }
                 <!-- TOTAL -->
                 <div class="text-end fw-bold">
                     Разом:

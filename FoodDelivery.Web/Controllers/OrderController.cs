@@ -64,6 +64,16 @@ namespace FoodDelivery.Web.Controllers
             var orders = await _orderService.GetByClientIdAsync(GetClientId());
             return View(orders);
         }
+        [HttpPost]
+        public async Task<IActionResult> Cancel(Guid orderId)
+        {
+            var result = await _orderService.Cancel(orderId, GetClientId());
+
+            if (!result)
+                TempData["Error"] = "Неможливо скасувати замовлення";
+
+            return RedirectToAction("My");
+        }
 
     }
 }

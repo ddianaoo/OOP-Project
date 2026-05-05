@@ -27,6 +27,8 @@ public class OrderService : IOrderService
             .Include(o => o.Items)
                 .ThenInclude(i => i.Dish)
             .Include(o => o.Client)
+            .Include(o => o.Courier)
+            .OrderByDescending(o => o.CreatedAt)
             .ToListAsync();
     }
 
@@ -37,6 +39,7 @@ public class OrderService : IOrderService
             .Include(o => o.Items)
             .ThenInclude(i => i.Dish)
             .Include(o => o.Client)
+            .OrderByDescending(o => o.CreatedAt)
             .ToListAsync();
     }
     public async Task<List<Order>> GetAvailableOrders()
@@ -47,6 +50,7 @@ public class OrderService : IOrderService
             .Where(o => o.CourierId == null &&
            o.Status == OrderStatus.New)
             .Include(o => o.Client)
+            .OrderByDescending(o => o.CreatedAt)
             .ToListAsync();
     }
 
@@ -121,6 +125,25 @@ public class OrderService : IOrderService
         var courier = await _context.Users.OfType<Courier>()
             .FirstOrDefaultAsync(x => x.Id == courierId);
         courier.IsAvailable = true;
+
+        await _context.SaveChangesAsync();
+        return true;
+    }
+
+    public async Task<bool> Cancel(Guid orderId, Guid clientId)
+    {
+        var order = await _context.Orders.FirstOrDefaultAsync(x => x.Id == orderId);
+
+        if (order == null)
+            return false;
+
+        if (order.ClientId != clientId)
+            return false;
+
+        if (order.Status != OrderStatus.New)
+            return false;
+
+        order.Cancel();
 
         await _context.SaveChangesAsync();
         return true;

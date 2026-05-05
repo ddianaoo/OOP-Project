@@ -1,0 +1,101 @@
+﻿@using FoodDelivery.Domain.Entities
+@using FoodDelivery.Domain.Enums
+@model List<Order>
+
+<h2 class="mb-4">
+    📋 Всі замовлення
+</h2>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">
+        Немає замовлень
+    </div>
+}
+else
+{
+    <div class="card shadow rounded-3">
+        <div class="card-body">
+
+            <table class="table table-hover align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Клієнт</th>
+                        <th>Кур’єр</th>
+                        <th>Адреса</th>
+                        <th>Статус</th>
+                        <th>Створено</th>
+                        <th>Деталі</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var order in Model)
+                    {
+                        <tr>
+                            <td>@order.Id</td>
+
+                            <td>
+                                @order.Client?.FirstName @order.Client?.LastName
+                                <br />
+                                <small class="text-muted">@order.Client?.Phone</small>
+                            </td>
+
+                            <td>
+                                @if (order.Courier != null)
+                                {
+                                    @order.Courier.FirstName @order.Courier.LastName
+                                }
+                                else
+                                {
+                                    <span class="text-muted">—</span>
+                                }
+                            </td>
+
+                            <td>@order.Address</td>
+
+                            <td>
+                                <span class="badge
+                @(order.Status == OrderStatus.New ? "bg-secondary" :
+                  order.Status == OrderStatus.Accepted ? "bg-primary" :
+                  order.Status == OrderStatus.Cancelled ? "bg-danger" :
+                  order.Status == OrderStatus.InProgress ? "bg-warning text-dark" :
+                  order.Status == OrderStatus.Delivered ? "bg-success" :
+                  "bg-danger")">
+                                    @order.Status
+                                </span>
+                            </td>
+
+                            <td>@order.CreatedAt.ToLocalTime()</td>
+
+                            <td>
+                                <details>
+                                    <summary class="btn btn-sm btn-outline-secondary">
+                                        📦 Склад
+                                    </summary>
+
+                                    <ul class="mt-2">
+                                        @foreach (var item in order.Items)
+                                        {
+                                            <li>
+                                                @item.Dish?.Name —
+                                                @item.Quantity × @item.Dish?.Price ₴
+                                            </li>
+                                        }
+                                    </ul>
+
+                                    <strong>
+                                        Разом:
+                                        @order.Items.Sum(x => x.Quantity * x.Dish.Price) ₴
+                                    </strong>
+                                </details>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+}

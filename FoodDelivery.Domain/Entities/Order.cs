@@ -70,4 +70,11 @@ public class Order
     {
         return Status == OrderStatus.New && CourierId == null;
     }
+    public void Cancel()
+    {
+        if (Status != OrderStatus.New)
+            throw new Exception("Cannot cancel accepted order");
+
+        Status = OrderStatus.Cancelled;
+    }
 }

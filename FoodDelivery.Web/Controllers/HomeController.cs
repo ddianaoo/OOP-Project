@@ -22,7 +22,7 @@ namespace FoodDelivery.Web.Controllers
                 return RedirectToAction("Index", "Dish");
             } else
             {
-               return View();
+               return RedirectToAction("Index", "CourierOrder");
             }
         }
 
