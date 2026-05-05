@@ -22,7 +22,7 @@ public class CourierTests
 
         var items = new List<OrderItem>
         {
-            new OrderItem(dish, 1)
+            new OrderItem(dish.Id, 1)
         };
 
         return new Order(Guid.NewGuid(), "Kyiv", items);

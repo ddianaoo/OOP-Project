@@ -6,7 +6,7 @@ public class Order
     public int Id { get; private set; }
 
     public string Address { get; private set; }
-    public DateTime CreatedAt { get; private set; }
+    public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
     public OrderStatus Status { get; private set; }
 
     public Guid ClientId { get; private set; }

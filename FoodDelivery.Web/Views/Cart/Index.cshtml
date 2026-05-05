@@ -1,0 +1,78 @@
+﻿@model Cart
+
+<h2>🛒 Кошик</h2>
+
+@if (Model?.Items == null || !Model.Items.Any())
+{
+    <p>Кошик порожній</p>
+}
+else
+{
+<div class="row justify-content-center">
+    <div class="col-md-12">
+        <div class="card shadow">
+            <div class="card-body">
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Страва</th>
+                <th>Ціна</th>
+                <th>Кількість</th>
+                <th>Сума</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.Dish?.Name</td>
+                    <td>@item.Dish?.Price ₴</td>
+                    <td>
+                        <div class="d-flex align-items-center gap-2">
+
+                            <form asp-action="Minus" method="post">
+                                <input type="hidden" name="dishId" value="@item.DishId" />
+                                <button class="btn btn-outline-secondary btn-sm">-</button>
+                            </form>
+
+                            <span>@item.Quantity</span>
+
+                            <form asp-action="Plus" method="post">
+                                <input type="hidden" name="dishId" value="@item.DishId" />
+                                <button class="btn btn-outline-secondary btn-sm">+</button>
+                            </form>
+
+                        </div>
+                    </td>
+                    <td>@(item.Quantity * item.Dish?.Price)</td>
+                    <td>
+                        <form asp-action="Remove" method="post">
+                            <input type="hidden" name="dishId" value="@item.DishId" />
+
+                            <button class="btn btn-sm btn-light border">
+                                <i class="bi bi-trash text-danger"></i>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="d-flex justify-content-between">
+    <form asp-action="Clear" method="post" class="mb-2">
+                            <button class="btn btn-outline-secondary">Скасувати</button>
+    </form>
+
+    <form asp-controller="Order" asp-action="Create" method="get">
+        <button class="btn btn-pink">Оформити</button>
+    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

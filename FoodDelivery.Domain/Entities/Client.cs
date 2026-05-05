@@ -25,7 +25,7 @@ public class Client : User
         var order = new Order(
             this.Id,
             address,
-            Cart.Items.Select(x => new OrderItem(x.Dish, x.Quantity)).ToList()
+            Cart.Items.Select(x => new OrderItem(x.Dish.Id, x.Quantity)).ToList()
         );
 
         Cart.Clear();

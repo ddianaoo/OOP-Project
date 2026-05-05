@@ -15,7 +15,15 @@ namespace FoodDelivery.Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            if (User.HasClaim("UserType", "Client")) {
+                return RedirectToAction("Index", "Menu");
+            } else if (User.HasClaim("UserType", "Admin"))
+            {
+                return RedirectToAction("Index", "Dish");
+            } else
+            {
+               return View();
+            }
         }
 
         public IActionResult Privacy()

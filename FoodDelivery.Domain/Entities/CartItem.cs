@@ -8,7 +8,7 @@
     public Guid DishId { get; private set; }
     public Dish Dish { get; private set; }
 
-    public int Quantity { get; private set; }
+    public int Quantity { get; set; }
 
     private CartItem() { }
 

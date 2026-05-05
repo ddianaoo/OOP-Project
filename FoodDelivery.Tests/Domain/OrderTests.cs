@@ -26,7 +26,7 @@ namespace FoodDelivery.Tests.Domain
             {
                 return new List<OrderItem>
             {
-                new OrderItem(CreateDish(), 1)
+                new OrderItem(CreateDish().Id, 1)
             };
             }
 

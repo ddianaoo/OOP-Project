@@ -34,7 +34,7 @@ public class OrderServiceTests
             "Kyiv street 1",
             new List<OrderItem>
             {
-                new OrderItem(dish, 2)
+                new OrderItem(dish.Id, 2)
             }
         );
 
@@ -72,7 +72,7 @@ public class OrderServiceTests
             "Kyiv street 2",
             new List<OrderItem>
             {
-            new OrderItem(dish, 1)
+            new OrderItem(dish.Id, 1)
             }
         );
 
@@ -106,7 +106,7 @@ public class OrderServiceTests
             "Kyiv street 3",
             new List<OrderItem>
             {
-                new OrderItem(dish, 3)
+                new OrderItem(dish.Id, 3)
             }
         );
 

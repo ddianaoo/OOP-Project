@@ -7,7 +7,7 @@
         <h2 class="fw-bold">🍽 Страви</h2>
 
         <a asp-action="Create" class="btn btn-pink">
-            ➕ Додати
+            <i class="bi bi-plus"></i> Додати
         </a>
     </div>
 
@@ -70,16 +70,19 @@
 
                                 <a asp-action="Edit"
                                    asp-route-id="@item.Id"
-                                   class="btn btn-sm btn-outline-warning me-2">
-                                    ✏️
-                                </a>
+                                   class="btn btn-sm btn-light border me-2">
 
-                                <button class="btn btn-sm btn-outline-danger"
+                                    <i class="bi bi-pencil text-warning"></i>
+
+                                </a>
+                                <button class="btn btn-sm btn-light border"
                                         data-bs-toggle="modal"
                                         data-bs-target="#deleteModal"
                                         data-id="@item.Id"
                                         data-name="@item.Name">
-                                    🗑
+
+                                    <i class="bi bi-trash text-danger"></i>
+
                                 </button>
 
                             </td>
@@ -97,13 +100,13 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content rounded-4">
 
-                <div class="modal-header border-0">
-                    <h5 class="modal-title">⚠️ Підтвердження</h5>
+                <div class="modal-header text-danger border-0">
+                    <h5 class="modal-title"><i class="bi bi-exclamation-diamond-fill"></i> Підтвердження</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
                 <div class="modal-body text-center">
-                    <p class="mb-2">Ви дійсно хочете видалити: <span id="dishName"></span> ?</p>
+                    <p class="mb-2">Ви дійсно хочете видалити: <span id="dishName" class="fw-bold"></span> ?</p>
                 </div>
 
                 <div class="modal-footer border-0 justify-content-end">

@@ -27,14 +27,17 @@ body {
     color: #8C578A;
 }
 
-.btn-pink {
+.btn-pink, .btn-pink:hover {
     background-color: #F8D2EA;
     border-color: #F8D2EA;
     color: #8C578A;
 }
 
-.btn-pink:hover {
-    background-color: #F8D2EA;
-    border-color: #F8D2EA;
-    color: #8C578A;
+
+.btn i {
+    transition: transform 0.2s ease;
+}
+
+.btn:hover i {
+    transform: scale(1.2);
 }

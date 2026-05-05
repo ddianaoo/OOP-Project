@@ -8,4 +8,5 @@ public interface IOrderService
     Task<Order> CreateAsync(Order order);
     Task<List<Order>> GetAllAsync();
     Task<bool> ChangeStatusAsync(int orderId, OrderStatus status);
+    Task<List<Order>> GetByClientIdAsync(Guid clientId);
 }

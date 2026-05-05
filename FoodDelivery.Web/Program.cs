@@ -10,6 +10,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<DishService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<ICartService, CartService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -23,6 +25,11 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminOnly", policy =>
         policy.RequireClaim("UserType", "Admin"));
+});
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ClientOnly", policy =>
+        policy.RequireClaim("UserType", "Client"));
 });
 
 builder.Services.AddDbContext<AppDbContext>(options =>

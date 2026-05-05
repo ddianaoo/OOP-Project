@@ -14,13 +14,9 @@ public class OrderItem
 
     private OrderItem() { } // EF
 
-    public OrderItem(Dish dish, int quantity)
+    public OrderItem(Guid dishId, int quantity)
     {
-        if (quantity <= 0)
-            throw new ArgumentException("Invalid quantity");
-
-        Dish = dish;
-        DishId = dish.Id;
+        DishId = dishId;
         Quantity = quantity;
     }
 }

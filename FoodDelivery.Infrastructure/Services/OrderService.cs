@@ -42,4 +42,14 @@ public class OrderService : IOrderService
         await _context.SaveChangesAsync();
         return true;
     }
+
+    public async Task<List<Order>> GetByClientIdAsync(Guid clientId)
+    {
+        return await _context.Orders
+            .Where(o => o.ClientId == clientId)
+            .Include(o => o.Items)
+            .ThenInclude(i => i.Dish)
+            .OrderByDescending(o => o.CreatedAt)
+            .ToListAsync();
+    }
 }
