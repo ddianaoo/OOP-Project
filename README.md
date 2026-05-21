@@ -1,11 +1,9 @@
 # Food Delivery System
 
-## Опис проєкту
-
 Цей проєкт є навчальною системою доставки їжі, реалізованою на C# з використанням принципів об'єктно-орієнтованого програмування.
 
 Система дозволяє користувачам:
-- переглядати меню
+- переглядати та керувати меню
 - додавати страви до кошика
 - створювати замовлення
 - відстежувати статус замовлення
@@ -13,7 +11,7 @@
 Адміністратор може:
 - створювати, оновлювати та видаляти страви
 - керувати меню
-- змінювати статуси замовлень
+- переглядати користувачів
 
 Кур’єр:
 - приймає замовлення
@@ -26,22 +24,33 @@
 Проєкт розділений на шари:
 
 ### Domain
-Містить бізнес-логіку та сутності:
+Містить наступні сутності:
 - User
 - Client
 - Admin
 - Courier
 - Dish
-- Menu
 - Cart
+- CartItem
 - Order
+- OrderItem
 
-### Application / Infrastructure
+Містить наступні enums:
+- OrderStatus (New, Accepted, InProgress, Delivered, Canceled)
+- UserRole(Client, Courier)
+
+Містить наступні інтерфейси:
+- IAuthService
+- ICartService
+- IOrderService
+
+###  Infrastructure
 Містить сервіси:
 - AuthService
-- MenuService
+- DishService
 - OrderService
 - CartService
+- UserService
 
 ### Tests
 Містить unit-тести:
@@ -82,7 +91,7 @@
 
 ```
 
-Created → Accepted → InDelivery → Delivered
+New → Accepted → InProgress → Delivered → Canceled
 
 ```
 
