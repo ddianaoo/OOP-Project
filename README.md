@@ -54,11 +54,15 @@
 
 ### Tests
 Містить unit-тести:
-- UserTests
+- OrderTests
 - DishTests
 - CartTests
-- OrderTests
+- ClientTests
+- CourierTests
 - AdminTests
+- AuthServiceTests
+- DishServiceTests
+- OrderServiceTests
 
 ---
 
@@ -101,13 +105,13 @@ New → Accepted → InProgress → Delivered → Canceled
 
 ### Client
 - додає товари в кошик
-- створює замовлення
+- створює чи скасовує замовлення
 - відстежує статус
 
 ### Admin
-- керує меню
 - додає/редагує/видаляє страви
-- керує статусами замовлень
+- переглядає статуси замовлень
+- переглядає користувачів системи
 
 ### Courier
 - приймає замовлення
@@ -115,18 +119,6 @@ New → Accepted → InProgress → Delivered → Canceled
 
 ---
 
-## Тестування
-
-Проєкт покритий unit-тестами (xUnit).
-
-### Основні тестові класи:
-- UserTests
-- DishTests
-- CartTests
-- OrderTests
-- AdminTests
-
----
 
 ## Технології
 
